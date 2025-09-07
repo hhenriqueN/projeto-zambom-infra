@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  atividades-service:
+    image: iquenavarro/atividades-service:latest
+    ports:
+      - "8001:8000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/atividades_db
+    depends_on:
+      - mongo
+
+  progresso-service:
+    image: iquenavarro/progresso-service:latest
+    ports:
+      - "8002:8000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/progresso_db
+    depends_on:
+      - mongo
+
+  agendamento-service:
+    image: iquenavarro/agendamento-service:latest
+    ports:
+      - "8003:8000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/agendamento_db
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
